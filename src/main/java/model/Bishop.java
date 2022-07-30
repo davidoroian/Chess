@@ -1,4 +1,4 @@
-package com.example.chess;
+package model;
 
 public class Bishop extends ChessPiece {
     public Bishop(int x, int y, String color) {

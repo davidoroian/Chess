@@ -1,4 +1,4 @@
-package com.example.chess;
+package model;
 
 public abstract class ChessPiece {
     private int x, y;
@@ -7,13 +7,6 @@ public abstract class ChessPiece {
     int takenID;
 
     public ChessPiece() {
-    }
-
-    public ChessPiece(int x, int y, String color, int id) {
-        this.x = x;
-        this.y = y;
-        this.color = color;
-        this.id = id;
     }
 
     public int getX() {
@@ -29,8 +22,6 @@ public abstract class ChessPiece {
     }
 
     public int getTakenID(){return takenID;}
-
-    public void setTakenID(int takenID){this.takenID=takenID;}
 
     public int getY() {
         return y;

@@ -1,4 +1,4 @@
-package com.example.chess;
+package model;
 
 public class ChessBoard {
     int[][] board;

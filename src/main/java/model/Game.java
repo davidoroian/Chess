@@ -1,4 +1,4 @@
-package com.example.chess;
+package model;
 
 import java.util.*;
 
@@ -17,11 +17,16 @@ public class Game {
     King whiteKing = new King(0, 3, "white"); // white king
     Queen blackQueen = new Queen(7, 4, "black"); //black queen
     Queen whiteQueen = new Queen(0, 4, "white"); //white queen
+    Map<Integer, Integer> takenPieces = new HashMap<>();//map to store the id of the pieces and the number of pieces that are taken
+
 
     public Game() {
         //Game game=new Game();
 
         //chessBoard.displayBoard();
+        for (int i = 1; i <= 12; i++) {
+            takenPieces.put(i, 0);
+        }
 
         for (int i = 0; i < 8; i++) {
             blackPawn[i] = new Pawn(6, i, "black");
@@ -78,15 +83,6 @@ public class Game {
 
 
     public void playGameMethod(int pieceX, int pieceY, int toX, int toY) {
-        Map<Integer, Integer> takenPieces = new HashMap<>() {{//map to store the id of the pieces and the number of pieces that are taken
-            for (int i = 1; i <= 12; i++)
-                put(i, 0);
-        }};
-
-
-        while (chessBoard.getBoard()[pieceX][pieceY] == 0) { //verify if the piece you want to move exists
-        }
-
         int takenID = -1;//get the (eventual) ID of the piece that is taken by the piece. if  it remains -1, no piece is taken
 
         switch (chessBoard.getBoard()[pieceX][pieceY]) { //getting the id of the piece, so I know what piece I want to move
@@ -95,6 +91,9 @@ public class Game {
                     if (blackPawn[i].getX() == pieceX && blackPawn[i].getY() == pieceY) {//finding the right black pawn
                         blackPawn[i].move(chessBoard.getBoard(), toX, toY);//moving the pawn
                         takenID = blackPawn[i].getTakenID();//update the ID of the taken piece
+                        if (toX == 0) {
+                            replacePiece(1, 0, toY);
+                        }
                     }
                 }
             }
@@ -135,6 +134,9 @@ public class Game {
                     if (whitePawn[i].getX() == pieceX && whitePawn[i].getY() == pieceY) { //finding the right white pawn
                         whitePawn[i].move(chessBoard.getBoard(), toX, toY);   //moving the pawn
                         takenID = whitePawn[i].getTakenID();
+                        if (toX == 7) {
+                            replacePiece(7, 7, toY);
+                        }
                     }
                 }
             }
@@ -175,67 +177,40 @@ public class Game {
         if (takenID != -1)//verify if a piece was taken
             takenPieces.put(takenID, takenPieces.get(takenID) + 1);
 
-        if (pieceX != toX)
-            putNewID(chessBoard, toX, toY, takenPieces);
-
         chessBoard.displayBoard();
 
         for (Integer x : takenPieces.values())//display the values from the map
-            System.out.println(x);
+            System.out.print(x + " ");
+        System.out.println("\n");
     }
 
-
-    public int checkTop(int id, int x,Map<Integer,Integer>takenPieces){//check if the piece arrived at the other end of the board
-        if (Arrays.asList(1,2,3,4,6).contains(id) && x==0){
-            //ask to introduce the piece id (from the removed ones) you want to change the current piece
-            String answear;
-            do{
-                System.out.println("Do you want to replace the piece with an removed one? (Y/N): ");
-                answear=in.next();
-            }while (!Objects.equals(answear, "Y") && !Objects.equals(answear, "N"));
-
-            if (answear.equals("Y")) {
-                System.out.println("What piece do you want to put? Enter the id (1-6) ");
-                while (true) {
-                    int newID = in.nextInt();
-                    if (takenPieces.get(newID) != 0 && Arrays.asList(1,2,3,4,6).contains(newID)) {
-                        takenPieces.put(newID, takenPieces.get(newID) - 1);//subtract them from the map
-                        return newID;
-                    } else
-                        System.out.println("Piece isn't taken!");
+    public void replacePiece(int pawnID, int x, int y) {
+        int id;
+        System.out.print("Enter the id of the piece you want back: ");
+        id = in.nextInt();
+        if (pawnID == 1) {
+            if (id < 6) {
+                if (takenPieces.get(id)!=0) {
+                    chessBoard.getBoard()[x][y] = id;
+                    takenPieces.put(id, takenPieces.get(id) - 1);
+                } else {
+                    System.out.println("Piece is still in the game");
                 }
+            } else {
+                System.out.println("That is an enemy piece!");
             }
         }
-        if (Arrays.asList(7,8,9,10,12).contains(id) && x==7){
-            String answear;
-            do{
-                System.out.println("Do you want to replace the piece with an removed one? (Y/N): ");
-                answear=in.next();
-            }while (!Objects.equals(answear, "Y") && !Objects.equals(answear, "N"));
-
-            if (answear.equals("Y")) {
-
-                System.out.println("What piece do you want to put? Enter the id (7-12) ");
-                while (true) {
-                    int newID = in.nextInt();
-                    if (takenPieces.get(newID) != 0 && Arrays.asList(7,8,9,10,12).contains(newID)) {
-                        takenPieces.put(newID, takenPieces.get(newID) - 1);
-                        return newID;
-                    } else
-                        System.out.println("Piece isn't taken!");
+        if (pawnID == 7) {
+            if (id > 6) {
+                if (takenPieces.get(id)!=0) {
+                    chessBoard.getBoard()[x][y] = id;
+                    takenPieces.put(id, takenPieces.get(id) - 1);
+                } else {
+                    System.out.println("Piece is still in the game");
                 }
+            } else {
+                System.out.println("That is an enemy piece!");
             }
         }
-        return -1;
     }
-
-   public void putNewID(ChessBoard chessBoard, int x, int y, Map<Integer,Integer>takenPieces) {
-       int id = chessBoard.getBoard()[x][y];
-       int newID = checkTop(id, x, takenPieces);
-       if (newID != -1) {
-           takenPieces.put(id, takenPieces.get(id) + 1);//take the piece out
-           chessBoard.getBoard()[x][y] = newID;//put the new piece on the board
-       }
-   }
-
 }
