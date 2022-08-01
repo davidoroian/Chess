@@ -19,7 +19,6 @@ public class Game {
     Queen whiteQueen = new Queen(0, 4, "white"); //white queen
     Map<Integer, Integer> takenPieces = new HashMap<>();//map to store the id of the pieces and the number of pieces that are taken
 
-
     public Game() {
         //Game game=new Game();
 
@@ -213,4 +212,9 @@ public class Game {
             }
         }
     }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
+
 }
