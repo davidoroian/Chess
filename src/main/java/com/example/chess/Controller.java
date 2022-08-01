@@ -40,13 +40,12 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {//init the board with pieces
-        Controller controller=new Controller();
         game=new Game();
         for (int i=0;i<8;i++)
             for (int j=0;j<8;j++) {
                 //put the anchorpane and the imageview in the grid
-                AnchorPane anchorPane=controller.putAnchorPane(j,i);
-                ImageView imageView = controller.getImage(i,j,game);
+                AnchorPane anchorPane = putAnchorPane(j,i);
+                ImageView imageView = getImage(i,j,game);
                 ChessBoard.add(anchorPane,j,i);
                 ChessBoard.add(imageView,j,i);
             }
@@ -61,7 +60,6 @@ public class Controller implements Initializable {
     }
 
     public void getToXY(MouseEvent e){//when releasing the mouse
-        Controller controller=new Controller();
         int toX, toY;
         Node node= (Node) e.getTarget();
         toY= GridPane.getColumnIndex(node);
@@ -69,10 +67,10 @@ public class Controller implements Initializable {
         if (count==2) {//call the method from game only when we have the two pair of indices
             game.playGameMethod(x, y, toX, toY);
             count=0;//reset count to 0
-            if (game.getChessBoard().getBoard()[toX][toY]!=0){
-                ImageView imageView=controller.getImage(toX,toY,game);
-                AnchorPane anchorPane= controller.putAnchorPane(x,y);
-                AnchorPane anchorPane1= controller.putAnchorPane(toX,toY);
+            if (game.isValidMove()){//change image only if the move is valid
+                ImageView imageView=getImage(toX,toY,game);
+                AnchorPane anchorPane= putAnchorPane(x,y);
+                AnchorPane anchorPane1= putAnchorPane(toX,toY);
                 ChessBoard.add(anchorPane,y,x);
                 ChessBoard.add(anchorPane1,toY,toX);
                 ChessBoard.add(imageView,toY,toX);

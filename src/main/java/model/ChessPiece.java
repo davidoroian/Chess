@@ -6,6 +6,7 @@ public abstract class ChessPiece {
     int id;
     int takenID;
 
+
     public ChessPiece() {
     }
 
@@ -40,7 +41,7 @@ public abstract class ChessPiece {
     public void move(int[][] board, int x, int y) {
         if (movePossible(board, x, y)) {
             if (board[x][y] == 0) {
-                this.takenID=-1;//no piece is taken
+                this.takenID=0;//no piece is taken
                 int temp = board[this.getX()][this.getY()];
                 board[this.getX()][this.getY()] = board[x][y];
                 board[x][y] = temp;
@@ -73,6 +74,7 @@ public abstract class ChessPiece {
             this.setY(y);
 
         } else {
+            takenID=-1;
             System.out.println("\nMove was not possible!!\n");
         }
     }

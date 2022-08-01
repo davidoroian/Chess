@@ -18,6 +18,7 @@ public class Game {
     Queen blackQueen = new Queen(7, 4, "black"); //black queen
     Queen whiteQueen = new Queen(0, 4, "white"); //white queen
     Map<Integer, Integer> takenPieces = new HashMap<>();//map to store the id of the pieces and the number of pieces that are taken
+    boolean validMove;//to notice if the move is valid
 
     public Game() {
         //Game game=new Game();
@@ -83,6 +84,7 @@ public class Game {
 
     public void playGameMethod(int pieceX, int pieceY, int toX, int toY) {
         int takenID = -1;//get the (eventual) ID of the piece that is taken by the piece. if  it remains -1, no piece is taken
+        validMove=false;
 
         switch (chessBoard.getBoard()[pieceX][pieceY]) { //getting the id of the piece, so I know what piece I want to move
             case 1 -> {
@@ -173,8 +175,10 @@ public class Game {
             }
             default -> throw new IllegalStateException("Unexpected value: " + chessBoard.getBoard()[pieceX][pieceY]);
         }
-        if (takenID != -1)//verify if a piece was taken
+        if (takenID != -1 && takenID!=0)//verify if a piece was taken
             takenPieces.put(takenID, takenPieces.get(takenID) + 1);
+        if (takenID!=-1)
+            validMove=true;
 
         chessBoard.displayBoard();
 
@@ -217,4 +221,7 @@ public class Game {
         return chessBoard;
     }
 
+    public boolean isValidMove() {
+        return validMove;
+    }
 }
