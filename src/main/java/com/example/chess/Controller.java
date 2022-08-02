@@ -25,18 +25,18 @@ public class Controller implements Initializable {
     private int count=1;//the first click when opening the app is not counted
 
     //images for every piece
-    Image blackBishop=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\BlackBishop.png");
-    Image whiteBishop=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\WhiteBishop.png");
-    Image blackKing=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\BlackKing.png");
-    Image whiteKing=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\WhiteKing.png");
-    Image blackKnight=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\BlackKnight.png");
-    Image whiteKnight=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\WhiteKnight.png");
-    Image blackPawn=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\BlackPawn.png");
-    Image whitePawn=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\WhitePawn.png");
-    Image blackQueen=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\BlackQueen.png");
-    Image whiteQueen=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\WhiteQueen.png");
-    Image blackRook=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\BlackRook.png");
-    Image whiteRook=new Image("C:\\Users\\Admin\\Desktop\\ChessApp\\src\\main\\resources\\ChessPieces\\WhiteRook.png");
+    Image blackBishop=new Image("BlackBishop.png");
+    Image whiteBishop=new Image("WhiteBishop.png");
+    Image blackKing=new Image("BlackKing.png");
+    Image whiteKing=new Image("WhiteKing.png");
+    Image blackKnight=new Image("BlackKnight.png");
+    Image whiteKnight=new Image("WhiteKnight.png");
+    Image blackPawn=new Image("BlackPawn.png");
+    Image whitePawn=new Image("WhitePawn.png");
+    Image blackQueen=new Image("BlackQueen.png");
+    Image whiteQueen=new Image("WhiteQueen.png");
+    Image blackRook=new Image("BlackRook.png");
+    Image whiteRook=new Image("WhiteRook.png");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {//init the board with pieces
