@@ -87,6 +87,7 @@ public class Game {
         validMove=false;
 
         switch (chessBoard.getBoard()[pieceX][pieceY]) { //getting the id of the piece, so I know what piece I want to move
+            case 0 -> System.out.println("There is no piece there");
             case 1 -> {
                 for (int i = 0; i < 8; i++) {
                     if (blackPawn[i].getX() == pieceX && blackPawn[i].getY() == pieceY) {//finding the right black pawn
