@@ -45,6 +45,8 @@ public abstract class ChessPiece {
                 int temp = board[this.getX()][this.getY()];
                 board[this.getX()][this.getY()] = board[x][y];
                 board[x][y] = temp;
+                this.setX(x);
+                this.setY(y);
             } else {
                 switch (color) {
                     case "black" -> {
@@ -52,6 +54,8 @@ public abstract class ChessPiece {
                             this.takenID=board[x][y];//get the ID of the piece taken
                             board[x][y] = board[this.getX()][this.getY()];
                             board[this.getX()][this.getY()] = 0;
+                            this.setX(x);
+                            this.setY(y);
                         } else {
                             System.out.println("\nFriendly fire!!\n");
                         }
@@ -61,6 +65,8 @@ public abstract class ChessPiece {
                             this.takenID=board[x][y];
                             board[x][y] = board[this.getX()][this.getY()];
                             board[this.getX()][this.getY()] = 0;
+                            this.setX(x);
+                            this.setY(y);
                         } else {
                             System.out.println("\nFriendly fire!!\n");
                         }
@@ -69,9 +75,6 @@ public abstract class ChessPiece {
                     default -> throw new IllegalStateException("Unexpected value: " + color);
                 }
             }
-
-            this.setX(x);   //we update the coordinates of the piece
-            this.setY(y);
 
         } else {
             takenID=-1;
