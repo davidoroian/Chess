@@ -7,7 +7,6 @@ public abstract class ChessPiece {
     int takenID;
     boolean hasMoved;
 
-
     public ChessPiece() {
     }
 
@@ -43,13 +42,13 @@ public abstract class ChessPiece {
         hasMoved=false;
         if (movePossible(board, x, y)) {
             if (board[x][y] == 0) {
-                this.takenID=0;//no piece is taken
+                this.takenID = 0;//no piece is taken
                 int temp = board[this.getX()][this.getY()];
                 board[this.getX()][this.getY()] = board[x][y];
                 board[x][y] = temp;
                 this.setX(x);
                 this.setY(y);
-                hasMoved=true;
+                hasMoved = true;
             } else {
                 switch (color) {
                     case "black" -> {

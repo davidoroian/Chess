@@ -19,6 +19,7 @@ public class Game {
     Queen whiteQueen = new Queen(0, 4, "white"); //white queen
     Map<Integer, Integer> takenPieces = new HashMap<>();//map to store the id of the pieces and the number of pieces that are taken
     boolean validMove;//to notice if the move is valid
+    boolean changeAlternative=true;
 
     public Game() {
         //Game game=new Game();
@@ -85,108 +86,113 @@ public class Game {
     public void playGameMethod(int pieceX, int pieceY, int toX, int toY) {
         int takenID = -1;//get the (eventual) ID of the piece that is taken by the piece. if  it remains -1, no piece is taken
         validMove=false;
+        int id=chessBoard.getBoard()[pieceX][pieceY];
 
-        switch (chessBoard.getBoard()[pieceX][pieceY]) { //getting the id of the piece, so I know what piece I want to move
-            case 0 -> System.out.println("There is no piece there");
-            case 1 -> {
-                for (int i = 0; i < 8; i++) {
-                    if (blackPawn[i].getX() == pieceX && blackPawn[i].getY() == pieceY) {//finding the right black pawn
-                        blackPawn[i].move(chessBoard.getBoard(), toX, toY);//moving the pawn
-                        validMove = blackPawn[i].hasMoved;
-                        takenID = blackPawn[i].getTakenID();//update the ID of the taken piece
-                        if (toX == 0) {
-                            replacePiece(1, 0, toY);
+        if (checkGoodAlternative(id)) {//check if the alternative movement is respected
+
+            switch (chessBoard.getBoard()[pieceX][pieceY]) { //getting the id of the piece, so I know what piece I want to move
+                case 0 -> System.out.println("There is no piece there");
+                case 1 -> {
+                    for (int i = 0; i < 8; i++) {
+                        if (blackPawn[i].getX() == pieceX && blackPawn[i].getY() == pieceY) {//finding the right black pawn
+                            blackPawn[i].move(chessBoard.getBoard(), toX, toY);//moving the pawn
+                            validMove = blackPawn[i].hasMoved;
+                            takenID = blackPawn[i].getTakenID();//update the ID of the taken piece
+                            if (toX == 0) {
+                                replacePiece(1, 0, toY);
+                            }
                         }
                     }
                 }
-            }
-            case 2 -> {
-                for (int i = 0; i < 2; i++) {
-                    if (blackRook[i].getX() == pieceX && blackRook[i].getY() == pieceY) { //finding the right black rook
-                        blackRook[i].move(chessBoard.getBoard(), toX, toY);   //moving the rook
-                        validMove = blackRook[i].hasMoved;
-                        takenID = blackRook[i].getTakenID();
-                    }
-                }
-            }
-            case 3 -> {
-                for (int i = 0; i < 2; i++) {
-                    if (blackKnight[i].getX() == pieceX && blackKnight[i].getY() == pieceY) { //finding the right black knight
-                        blackKnight[i].move(chessBoard.getBoard(), toX, toY);   //moving the knight
-                        validMove = blackKnight[i].hasMoved;
-                        takenID = blackKnight[i].getTakenID();
-                    }
-                }
-            }
-            case 4 -> {
-                for (int i = 0; i < 2; i++) {
-                    if (blackBishop[i].getX() == pieceX && blackBishop[i].getY() == pieceY) { //finding the right black bishop
-                        blackBishop[i].move(chessBoard.getBoard(), toX, toY);   //moving the bishop
-                        validMove = blackBishop[i].hasMoved;
-                        takenID = blackBishop[i].getTakenID();
-                    }
-                }
-            }
-            case 5 -> {
-                blackKing.move(chessBoard.getBoard(), toX, toY);
-                validMove = blackKing.hasMoved;
-                takenID = blackKing.getTakenID();
-            }
-            case 6 -> {
-                blackQueen.move(chessBoard.getBoard(), toX, toY);
-                validMove = blackQueen.hasMoved;
-                takenID = blackQueen.getTakenID();
-            }
-            case 7 -> {
-                for (int i = 0; i < 8; i++) {
-                    if (whitePawn[i].getX() == pieceX && whitePawn[i].getY() == pieceY) { //finding the right white pawn
-                        whitePawn[i].move(chessBoard.getBoard(), toX, toY);   //moving the pawn
-                        validMove = whitePawn[i].hasMoved;
-                        takenID = whitePawn[i].getTakenID();
-                        if (toX == 7) {
-                            replacePiece(7, 7, toY);
+                case 2 -> {
+                    for (int i = 0; i < 2; i++) {
+                        if (blackRook[i].getX() == pieceX && blackRook[i].getY() == pieceY) { //finding the right black rook
+                            blackRook[i].move(chessBoard.getBoard(), toX, toY);   //moving the rook
+                            validMove = blackRook[i].hasMoved;
+                            takenID = blackRook[i].getTakenID();
                         }
                     }
                 }
-            }
-            case 8 -> {
-                for (int i = 0; i < 2; i++) {
-                    if (whiteRook[i].getX() == pieceX && whiteRook[i].getY() == pieceY) { //finding the right white rook
-                        whiteRook[i].move(chessBoard.getBoard(), toX, toY);   //moving the rook
-                        validMove = whiteRook[i].hasMoved;
-                        takenID = whiteRook[i].getTakenID();
+                case 3 -> {
+                    for (int i = 0; i < 2; i++) {
+                        if (blackKnight[i].getX() == pieceX && blackKnight[i].getY() == pieceY) { //finding the right black knight
+                            blackKnight[i].move(chessBoard.getBoard(), toX, toY);   //moving the knight
+                            validMove = blackKnight[i].hasMoved;
+                            takenID = blackKnight[i].getTakenID();
+                        }
                     }
                 }
-            }
-            case 9 -> {
-                for (int i = 0; i < 2; i++) {
-                    if (whiteKnight[i].getX() == pieceX && whiteKnight[i].getY() == pieceY) { //finding the right white knight
-                        whiteKnight[i].move(chessBoard.getBoard(), toX, toY);   //moving the knight
-                        validMove = whiteKnight[i].hasMoved;
-                        takenID = whiteKnight[i].getTakenID();
+                case 4 -> {
+                    for (int i = 0; i < 2; i++) {
+                        if (blackBishop[i].getX() == pieceX && blackBishop[i].getY() == pieceY) { //finding the right black bishop
+                            blackBishop[i].move(chessBoard.getBoard(), toX, toY);   //moving the bishop
+                            validMove = blackBishop[i].hasMoved;
+                            takenID = blackBishop[i].getTakenID();
+                        }
                     }
                 }
-            }
-            case 10 -> {
-                for (int i = 0; i < 2; i++) {
-                    if (whiteBishop[i].getX() == pieceX && whiteBishop[i].getY() == pieceY) { //finding the right white bishop
-                        whiteBishop[i].move(chessBoard.getBoard(), toX, toY);   //moving the bishop
-                        validMove = whiteBishop[i].hasMoved;
-                        takenID = whiteBishop[i].getTakenID();
+                case 5 -> {
+                    blackKing.move(chessBoard.getBoard(), toX, toY);
+                    validMove = blackKing.hasMoved;
+                    takenID = blackKing.getTakenID();
+                }
+                case 6 -> {
+                    blackQueen.move(chessBoard.getBoard(), toX, toY);
+                    validMove = blackQueen.hasMoved;
+                    takenID = blackQueen.getTakenID();
+                }
+                case 7 -> {
+                    for (int i = 0; i < 8; i++) {
+                        if (whitePawn[i].getX() == pieceX && whitePawn[i].getY() == pieceY) { //finding the right white pawn
+                            whitePawn[i].move(chessBoard.getBoard(), toX, toY);   //moving the pawn
+                            validMove = whitePawn[i].hasMoved;
+                            takenID = whitePawn[i].getTakenID();
+                            if (toX == 7) {
+                                replacePiece(7, 7, toY);
+                            }
+                        }
                     }
                 }
+                case 8 -> {
+                    for (int i = 0; i < 2; i++) {
+                        if (whiteRook[i].getX() == pieceX && whiteRook[i].getY() == pieceY) { //finding the right white rook
+                            whiteRook[i].move(chessBoard.getBoard(), toX, toY);   //moving the rook
+                            validMove = whiteRook[i].hasMoved;
+                            takenID = whiteRook[i].getTakenID();
+                        }
+                    }
+                }
+                case 9 -> {
+                    for (int i = 0; i < 2; i++) {
+                        if (whiteKnight[i].getX() == pieceX && whiteKnight[i].getY() == pieceY) { //finding the right white knight
+                            whiteKnight[i].move(chessBoard.getBoard(), toX, toY);   //moving the knight
+                            validMove = whiteKnight[i].hasMoved;
+                            takenID = whiteKnight[i].getTakenID();
+                        }
+                    }
+                }
+                case 10 -> {
+                    for (int i = 0; i < 2; i++) {
+                        if (whiteBishop[i].getX() == pieceX && whiteBishop[i].getY() == pieceY) { //finding the right white bishop
+                            whiteBishop[i].move(chessBoard.getBoard(), toX, toY);   //moving the bishop
+                            validMove = whiteBishop[i].hasMoved;
+                            takenID = whiteBishop[i].getTakenID();
+                        }
+                    }
+                }
+                case 11 -> {
+                    whiteKing.move(chessBoard.getBoard(), toX, toY);
+                    validMove = whiteKing.hasMoved;
+                    takenID = whiteKing.getTakenID();
+                }
+                case 12 -> {
+                    whiteQueen.move(chessBoard.getBoard(), toX, toY);
+                    validMove = whiteQueen.hasMoved;
+                    takenID = whiteQueen.getTakenID();
+                }
+                default -> throw new IllegalStateException("Unexpected value: " + chessBoard.getBoard()[pieceX][pieceY]);
             }
-            case 11 -> {
-                whiteKing.move(chessBoard.getBoard(), toX, toY);
-                validMove = whiteKing.hasMoved;
-                takenID = whiteKing.getTakenID();
-            }
-            case 12 -> {
-                whiteQueen.move(chessBoard.getBoard(), toX, toY);
-                validMove = whiteQueen.hasMoved;
-                takenID = whiteQueen.getTakenID();
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + chessBoard.getBoard()[pieceX][pieceY]);
+            changeAlternative= !changeAlternative;
         }
         if (takenID != -1 && takenID!=0)//verify if a piece was taken
             takenPieces.put(takenID, takenPieces.get(takenID) + 1);
@@ -234,5 +240,11 @@ public class Game {
 
     public boolean isValidMove() {
         return validMove;
+    }
+
+    public boolean checkGoodAlternative(int id){//check for moving alternatively black-white
+        if (changeAlternative && Arrays.asList(1,2,3,4,5,6).contains(id))
+            return true;
+        return !changeAlternative && Arrays.asList(7, 8, 9, 10, 11,12).contains(id);
     }
 }
