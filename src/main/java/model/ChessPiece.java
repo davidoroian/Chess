@@ -5,6 +5,7 @@ public abstract class ChessPiece {
     String color;
     int id;
     int takenID;
+    boolean hasMoved;
 
 
     public ChessPiece() {
@@ -39,6 +40,7 @@ public abstract class ChessPiece {
     public abstract boolean movePossible(int[][] board, int x, int y);
 
     public void move(int[][] board, int x, int y) {
+        hasMoved=false;
         if (movePossible(board, x, y)) {
             if (board[x][y] == 0) {
                 this.takenID=0;//no piece is taken
@@ -47,6 +49,7 @@ public abstract class ChessPiece {
                 board[x][y] = temp;
                 this.setX(x);
                 this.setY(y);
+                hasMoved=true;
             } else {
                 switch (color) {
                     case "black" -> {
@@ -56,6 +59,7 @@ public abstract class ChessPiece {
                             board[this.getX()][this.getY()] = 0;
                             this.setX(x);
                             this.setY(y);
+                            hasMoved=true;
                         } else {
                             System.out.println("\nFriendly fire!!\n");
                         }
@@ -67,6 +71,7 @@ public abstract class ChessPiece {
                             board[this.getX()][this.getY()] = 0;
                             this.setX(x);
                             this.setY(y);
+                            hasMoved=true;
                         } else {
                             System.out.println("\nFriendly fire!!\n");
                         }
@@ -75,10 +80,6 @@ public abstract class ChessPiece {
                     default -> throw new IllegalStateException("Unexpected value: " + color);
                 }
             }
-
-        } else {
-            takenID=-1;
-            System.out.println("\nMove was not possible!!\n");
         }
     }
 };
